@@ -27,9 +27,11 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.marsphotos.MarsPhotosApplication
 import com.example.marsphotos.data.MarsPhotosRepository
 import com.example.marsphotos.model.MarsPhoto
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 /**
  * UI state for the Home screen
@@ -40,7 +42,14 @@ sealed interface MarsUiState {
     object Loading : MarsUiState
 }
 
-class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : ViewModel() {
+@HiltViewModel
+class MarsViewModel @Inject constructor() : ViewModel() {
+     val marsPhotosRepository: MarsPhotosRepository = object: MarsPhotosRepository{
+        override suspend fun getMarsPhotos(): List<MarsPhoto> {
+            return listOf()
+        }
+    }
+//class MarsViewModel @Inject constructor(private val marsPhotosRepository: MarsPhotosRepository) : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
     var marsUiState: MarsUiState by mutableStateOf(MarsUiState.Loading)
         private set
@@ -77,7 +86,8 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
             initializer {
                 val application = (this[APPLICATION_KEY] as MarsPhotosApplication)
                 val marsPhotosRepository = application.container.marsPhotosRepository
-                MarsViewModel(marsPhotosRepository = marsPhotosRepository)
+                MarsViewModel()
+//                MarsViewModel(marsPhotosRepository = marsPhotosRepository)
             }
         }
     }
