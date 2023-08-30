@@ -35,7 +35,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.marsphotos.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -87,8 +87,18 @@ dependencies {
 //    hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 
     implementation("com.google.dagger:hilt-android:2.47")
+    implementation("com.google.ar:core:1.39.0")
+
+    testImplementation("com.google.dagger:hilt-android-testing:2.47")
     kapt("com.google.dagger:hilt-android-compiler:2.47")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.47")
+    // ...with Java.
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.47")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.47")
+    // ...with Kotlin.
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.47")
+
     // Retrofit
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -106,4 +116,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     debugImplementation("androidx.compose.ui:ui-tooling")
 
+//    androidTestImplementation("androidx.test:runner:$androidXTestVersion")
+//    androidTestImplementation("androidx.test:rules:$androidXTestVersion")
 }
