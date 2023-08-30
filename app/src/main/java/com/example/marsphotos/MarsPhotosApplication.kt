@@ -16,7 +16,7 @@
 package com.example.marsphotos
 
 import android.app.Application
-import com.example.marsphotos.ui.screens.AppContainer
+import com.example.marsphotos.network.AppContainer
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
