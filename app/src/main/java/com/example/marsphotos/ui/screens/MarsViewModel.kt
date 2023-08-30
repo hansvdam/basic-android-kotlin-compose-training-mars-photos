@@ -43,13 +43,7 @@ sealed interface MarsUiState {
 }
 
 @HiltViewModel
-class MarsViewModel @Inject constructor() : ViewModel() {
-     val marsPhotosRepository: MarsPhotosRepository = object: MarsPhotosRepository{
-        override suspend fun getMarsPhotos(): List<MarsPhoto> {
-            return listOf()
-        }
-    }
-//class MarsViewModel @Inject constructor(private val marsPhotosRepository: MarsPhotosRepository) : ViewModel() {
+class MarsViewModel @Inject constructor(private val marsPhotosRepository: MarsPhotosRepository) : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
     var marsUiState: MarsUiState by mutableStateOf(MarsUiState.Loading)
         private set
@@ -86,8 +80,8 @@ class MarsViewModel @Inject constructor() : ViewModel() {
             initializer {
                 val application = (this[APPLICATION_KEY] as MarsPhotosApplication)
                 val marsPhotosRepository = application.container.marsPhotosRepository
-                MarsViewModel()
-//                MarsViewModel(marsPhotosRepository = marsPhotosRepository)
+//                MarsViewModel()
+                MarsViewModel(marsPhotosRepository = marsPhotosRepository)
             }
         }
     }

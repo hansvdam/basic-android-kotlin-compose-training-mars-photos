@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.marsphotos.data
+package com.example.marsphotos.ui.screens
 
+import com.example.marsphotos.data.MarsPhotosRepository
+import com.example.marsphotos.data.NetworkMarsPhotosRepository
 import com.example.marsphotos.network.MarsApiService
 import retrofit2.Retrofit
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -75,7 +77,9 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun providesRepository(apiService: MarsApiService) :MarsPhotosRepository = NetworkMarsPhotosRepository(apiService)
+    fun providesRepository(apiService: MarsApiService) : MarsPhotosRepository {
+        return NetworkMarsPhotosRepository(apiService)
+    }
 }
 class DefaultAppContainer : AppContainer {
     private val baseUrl = "https://android-kotlin-fun-mars-server.appspot.com/"
